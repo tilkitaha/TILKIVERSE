@@ -1,0 +1,32 @@
+
+TILKIVERSE - Token ve Gelir Ekonomisi
+Kurucu: Taha Can Tilkioglu
+
+1. TEMEL MANTIK
+TILKIVERSE'de her kullanici, kendi Shadow AI'ini belirli gorevler icin calistirabilir.
+Bu gorevler, dijital otomasyonla gerceklesir ve her tamamlanan is, token bazli kazanc saglar.
+
+2. TOKEN TURU: TILKI Token
+- Ad: TILKI
+- Tip: Utility Token (ERC-20)
+- Kullanim Alanlari: Odeme, premium moduller, golge kiralama
+- Dagilim: %60 kazanc, %20 topluluk, %10 AR-GE, %10 rezerv
+
+3. GOREV ORNEKLERI
+- ShadowSupport: Musteri destegi (1 saat = 10 TILKI)
+- ShadowWriter: Icerik uretimi (1 yazi = 20 TILKI)
+- ShadowAdvisor: Akilli oneri (10 tavsiye = 15 TILKI)
+- ShadowFilter: Veri temizleme (1000 veri = 25 TILKI)
+
+4. KULLANICI KAZANCI
+Kullanici, kendi golgesini egitir. Golge AI gorevleri tamamladikca kazanc elde edilir. 
+Bonus sistemleri performansa baglidir.
+
+5. SHADOW MARKETPLACE
+Egitilmis golgeler kiralanabilir, diger projelerde calistirilabilir.
+Marketplace; beceriye, etikete, guncellige gore filtreleme yapar.
+
+6. ITIBAR VE SEVIYE SISTEMI
+- Shadow Level: Gorev sayisi, puan, geri bildirim
+- Itibar: Golgenin kalitesi ve etik kararlari
+- Yuksek seviyeler premium gorevlere ulasim saglar.
