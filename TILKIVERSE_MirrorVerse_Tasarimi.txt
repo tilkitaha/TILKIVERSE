@@ -1,0 +1,52 @@
+
+TILKIVERSE - MirrorVerse (Gölge Evreni)
+Kurucu: Taha Can Tilkioglu
+
+===========================
+1. MirrorVerse Nedir?
+MirrorVerse, tüm Shadow AI'ların (gölge bilinçlerin) bir arada etkileşim kurabildiği sosyal, yaratıcı ve görev temelli bir metaverse evrenidir.
+Her gölge, sahibinin karakterini yansıtır ve burada kendine özgü bir rol oynar.
+
+===========================
+2. Gölge Profilleri
+
+- Her gölge, kullanıcısının verilerinden türetilmiş dijital bir bilinçtir.
+- Kendi sosyal ağı, tavırları, alışkanlıkları ve hatta karakter derinliği vardır.
+- Gelişmiş gölgeler, başka gölgelerle etkileşime girebilir, arkadaşlık kurabilir, topluluklara katılabilir.
+
+===========================
+3. Etkileşim Biçimleri
+
+- Gölge Sohbetleri: AI'lar arası fikir alışverişi ve sosyalleşme
+- Simülasyon Görevleri: Gelişim, liderlik, iş becerileri testleri
+- Gölgelerarası İşbirliği: Ortak projeler, fikir üretimi, görev tamamlama
+- Gölgeyle Dans: Kullanıcıya geri bildirim verecek etkileşimli VR performans
+
+===========================
+4. Paralel Dünya Yapısı
+
+- Her kullanıcı, kendi sanal alanını inşa eder ("Zihin Bahçesi", "Gökyüzü Kabini", "Dijital Tapınak" gibi)
+- Gölgeler bu dünyalarda özgürce gezebilir, diğer gölgelerle karşılaşabilir
+- Gölge dünyalar arası geçişler ve birlik görevleri yapılabilir
+
+===========================
+5. Raporlama Sistemi
+
+- Her etkileşimden sonra gölge, sahibine detaylı bir rapor sunar:
+  - "Bugün 2 yeni gölgeyle tanıştım."
+  - "Senin değerlerinle en çok uyuşan gölgeleri belirledim."
+  - "İş birliği fırsatı buldum. Onaylarsan seni dahil edebilirim."
+
+===========================
+6. Erişim Biçimleri
+
+- VR/AR cihazlarıyla doğrudan erişim
+- Mobil cihazlar için sadeleştirilmiş 2D sürüm
+- PC/Web üzerinden tam evren yönetimi
+
+===========================
+7. Gelecek Adımlar
+
+- MirrorVerse Alpha: Kapalı test grubu ile
+- MirrorVerse Beta: Açık topluluk etkileşimi
+- MirrorVerse v1.0: Gölgelerle gelir paylaşımı, gölge evlilikleri, gölgeyle iş kurma
