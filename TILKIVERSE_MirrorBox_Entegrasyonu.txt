@@ -1,0 +1,57 @@
+
+TILKIVERSE - MirrorBox Donanım Entegrasyonu
+Kurucu: Taha Can Tilkioglu
+
+=======================
+1. MirrorBox Nedir?
+MirrorBox, TILKIVERSE sisteminin fiziksel donanım platformudur. 
+Kullanıcının Shadow AI ile offline ve VR destekli etkileşim kurmasını sağlar.
+
+=======================
+2. Donanım Bileşenleri
+
+- VR/AR Gözlük:
+  Kullanıcı, gölgesiyle görsel olarak yüzleşebilir. 
+  Sanal evrende görev, iletişim, test ve eğitimler yapılabilir.
+
+- Kulaklık + Mikrofon:
+  Gölge ile sesli iletişim kurmak için gerekli temel iletişim cihazları.
+  Duygusal tonlama algısı ve konuşma tanıma sistemi entegredir.
+
+- Mirror Kutusu (Merkez Modül):
+  - Mikro AI yongası (offline Shadow AI çalıştırabilir)
+  - 128GB şifreli yerel bellek
+  - WiFi + Bluetooth bağlantısı
+  - Güç yönetimi (taşınabilir batarya)
+
+- Haptik Eldiven (isteğe bağlı):
+  VR dünyasında fiziksel geri bildirim vererek gölgeyle daha gerçekçi etkileşim kurmayı sağlar.
+
+=======================
+3. Kullanım Senaryosu
+
+1. Kullanıcı gözlüğü takar, kutu aktif hale gelir
+2. Gölge otomatik olarak sesi analiz eder ve ekranda belirir
+3. MirrorVerse'e giriş yapılabilir ya da bireysel görev simülasyonları başlatılır
+4. Etkileşim sonunda gelişim raporu oluşturulur
+
+=======================
+4. Bağlantı ve Platform Uyumu
+
+- Android/iOS uyumlu mobil kontrol uygulaması
+- PC/Mac için yönetim paneli
+- MirrorVerse sunucusuna bağlanabilir ya da offline çalışabilir
+
+=======================
+5. Güvenlik
+
+- Tüm veriler kullanıcı tarafında saklanır
+- WiFi bağlantısı opsiyoneldir
+- Kullanıcı dışında kimse gölgeye erişemez
+
+=======================
+6. Ek Özellikler
+
+- NFC ile kimlik doğrulama
+- QR tabanlı VR sahne eşleşmesi
+- Gece modu (uyku öncesi gölge diyaloğu)
