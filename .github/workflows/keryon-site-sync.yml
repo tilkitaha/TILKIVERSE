@@ -1,0 +1,81 @@
+name: Sync KERYON into TILKI LAB site
+
+on:
+  push:
+    paths:
+      - '.github/workflows/keryon-site-sync.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy KERYON demos
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p demos/keryon
+          BASE='https://raw.githubusercontent.com/tilkitaha/Keryon-flight-lab-prototype-/main'
+          for f in index.html app.js styles.css disaster.css disaster.js oracle.html oracle-v2.html rescue-grid.html; do
+            curl -fsSL "$BASE/$f" -o "demos/keryon/$f"
+          done
+
+      - name: Add KERYON product and demo showcase
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('index.html')
+          s = path.read_text(encoding='utf-8')
+
+          css = r'''
+          [data-k-lang]{display:none}html[lang="tr"] [data-k-lang="tr"],html[lang="en"] [data-k-lang="en"],html[lang="pl"] [data-k-lang="pl"]{display:contents}
+          .keryonWrap{border:1px solid #79d9ff40;border-radius:28px;padding:34px;background:radial-gradient(circle at 15% 0,#158cc31b,transparent 38%),linear-gradient(135deg,#06131c,#090d13);box-shadow:inset 0 0 80px #42c9ff08}
+          .keryonTop{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start}.keryonMark{font:700 10px ui-monospace,monospace;letter-spacing:.18em;color:#78e4ff;text-transform:uppercase}.keryonTop h2{font-size:clamp(44px,5.5vw,76px);letter-spacing:-.05em;line-height:.94;margin:12px 0}.keryonTop p{color:#a1b2c1;line-height:1.75;max-width:760px}.keryonStat{border:1px solid #ffffff1c;border-radius:18px;padding:19px;background:#071019}.keryonStat b{display:block;color:#78e4ff;font:600 11px ui-monospace,monospace;letter-spacing:.1em}.keryonStat strong{display:block;font:500 34px ui-monospace,monospace;margin:15px 0 5px}.keryonStat span{color:#7f91a2;font-size:12px;line-height:1.6}.keryonDemos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:28px}.keryonCard{display:block;min-height:210px;padding:20px;border:1px solid #ffffff1a;border-radius:18px;background:linear-gradient(145deg,#ffffff08,#ffffff02);color:#fff;text-decoration:none;transition:.22s}.keryonCard:hover{transform:translateY(-4px);border-color:#78e4ff77}.keryonCard .liveTag{display:inline-flex;border:1px solid #75efb244;color:#8ef0bb;border-radius:999px;padding:6px 8px;font:700 8px ui-monospace,monospace;letter-spacing:.08em}.keryonCard h3{font-size:21px;margin:42px 0 9px}.keryonCard p{color:#8092a3;font-size:12px;line-height:1.65}.keryonCard small{display:block;color:#78e4ff;margin-top:14px;font:700 9px ui-monospace,monospace;letter-spacing:.08em}.keryonSafety{margin-top:20px;padding-top:18px;border-top:1px solid #ffffff17;color:#6f8192;font-size:11px;line-height:1.7}.keryonActions{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}@media(max-width:1000px){.keryonDemos{grid-template-columns:repeat(2,1fr)}.keryonTop{grid-template-columns:1fr}}@media(max-width:680px){.keryonWrap{padding:22px 16px}.keryonDemos{grid-template-columns:1fr}}
+          '''
+          if '.keryonWrap{' not in s:
+              s = s.replace('</style>', css + '</style>', 1)
+
+          if 'href="#keryon"' not in s:
+              s = s.replace('<a href="#products"', '<a href="#keryon">KERYON</a><a href="#products"', 1)
+
+          if 'href="#contact"' not in s:
+              s = s.replace('</nav><div class="langs">', '<a href="#contact"><span data-k-lang="tr">İLETİŞİM</span><span data-k-lang="en">CONTACT</span><span data-k-lang="pl">KONTAKT</span></a></nav><div class="langs">', 1)
+
+          s = s.replace('<b>24</b><span data-t="m.programs"', '<b>25</b><span data-t="m.programs"', 1)
+          s = s.replace('<b>01</b><span data-t="m.live"', '<b>05</b><span data-t="m.live"', 1)
+          s = s.replace('R&D NETWORK<b>24 PROGRAMS</b>', 'R&D NETWORK<b>25 PROGRAMS</b>', 1)
+
+          if 'id="contact" class="section shell"' not in s:
+              s = s.replace('<section class="section shell"><div class="contact">', '<section id="contact" class="section shell"><div class="contact">', 1)
+
+          section = r'''
+          <section id="keryon" class="section shell"><div class="keryonWrap"><div class="keryonTop"><div><span class="keryonMark">KERYON DYNAMICS // INTELLIGENCE IN MOTION</span><h2>KERYON <span style="color:transparent;-webkit-text-stroke:1px #8bdfff88">FLIGHT LAB</span></h2><p><span data-k-lang="tr">Tarayıcı tabanlı, silahsız sivil UAV otonomisi, dijital ikiz, runtime assurance ve afet dayanıklılığı araştırma platformu. KERYON’un ana sorusu yalnızca “otonom sistem karar verebilir mi?” değil; <b>gerçeklik modelden uzaklaşırken sistem kendi kararının hâlâ güvenilir olup olmadığını anlayabilir mi?</b></span><span data-k-lang="en">A browser-based research platform for non-weaponized civilian UAV autonomy, digital twins, runtime assurance and disaster resilience. KERYON asks not only whether autonomy can decide, but <b>whether it can recognize when its own decision is no longer trustworthy as reality diverges from the model.</b></span><span data-k-lang="pl">Przeglądarkowa platforma badawcza dla cywilnej autonomii UAV, cyfrowych bliźniaków, runtime assurance i odporności kryzysowej. KERYON bada nie tylko podejmowanie decyzji, ale <b>zdolność systemu do wykrycia, kiedy decyzja przestaje być wiarygodna.</b></span></p><div class="keryonActions"><a class="btn demo" href="demos/keryon/oracle-v2.html" target="_blank"><span data-k-lang="tr">ORACLE v2'Yİ ÇALIŞTIR ↗</span><span data-k-lang="en">RUN ORACLE v2 ↗</span><span data-k-lang="pl">URUCHOM ORACLE v2 ↗</span></a><a class="btn" href="https://github.com/tilkitaha/Keryon-flight-lab-prototype-" target="_blank">GITHUB ↗</a></div></div><aside class="keryonStat"><b>ORACLE v2 // RUNTIME ASSURANCE</b><strong>4,096</strong><span><span data-k-lang="tr">Her karar çalıştırmasında değerlendirilen sentetik plan-gelecek kombinasyonu: 4 aday strateji × 1.024 gelecek.</span><span data-k-lang="en">Synthetic plan-future combinations evaluated per decision: 4 candidate strategies × 1,024 futures.</span><span data-k-lang="pl">Kombinacje plan–przyszłość analizowane dla jednej decyzji: 4 strategie × 1 024 przyszłości.</span></span></aside></div><div class="keryonDemos"><a class="keryonCard" href="demos/keryon/oracle-v2.html" target="_blank"><span class="liveTag">● LIVE PROTOTYPE</span><h3>ORACLE v2</h3><p><span data-k-lang="tr">Intent → Futures → Assurance → Shadow → Replan → Proof. Counterfactual planning, Shadow Twin divergence, chaos injection, self-healing roles ve JSON Decision Proof.</span><span data-k-lang="en">Intent → Futures → Assurance → Shadow → Replan → Proof. Counterfactual planning, Shadow Twin divergence, chaos injection, self-healing roles and JSON Decision Proof.</span><span data-k-lang="pl">Counterfactual planning, Shadow Twin, wstrzykiwanie awarii, automatyczne replanning i JSON Decision Proof.</span></p><small>OPEN LAB ↗</small></a><a class="keryonCard" href="demos/keryon/oracle.html" target="_blank"><span class="liveTag">● LIVE PROTOTYPE</span><h3>ORACLE v1</h3><p><span data-k-lang="tr">İlk Shadow Twin konsepti: aday planların belirsizlik altında karşılaştırılması ve canlı reality-divergence takibi.</span><span data-k-lang="en">Original Shadow Twin concept: compare candidate plans under uncertainty and monitor live reality divergence.</span><span data-k-lang="pl">Pierwszy Shadow Twin: porównanie planów pod niepewnością i monitoring rozbieżności rzeczywistości.</span></p><small>OPEN SHADOW TWIN ↗</small></a><a class="keryonCard" href="demos/keryon/rescue-grid.html" target="_blank"><span class="liveTag">● LIVE PROTOTYPE</span><h3>Rescue Grid</h3><p><span data-k-lang="tr">Kentsel ani sel için sentetik operasyon konsepti: çoklu UAV taraması, yol geçilebilirliği, risk önceliği ve responder route rerouting.</span><span data-k-lang="en">Synthetic urban flash-flood concept: multi-UAV scanning, road passability, risk prioritization and responder-route rerouting.</span><span data-k-lang="pl">Koncepcja powodzi miejskiej: skanowanie UAV, przejezdność dróg, priorytety ryzyka i rerouting ratowników.</span></p><small>OPEN RESCUE GRID ↗</small></a><a class="keryonCard" href="demos/keryon/index.html" target="_blank"><span class="liveTag">● LIVE PROTOTYPE</span><h3>Flight Lab</h3><p><span data-k-lang="tr">Manhattan dijital test alanında 1–6 UAV, Three.js 3D dünya, sensör füzyonu, rüzgâr/GPS/link/propulsion bozulmaları ve açıklanabilir NOEMA event stream.</span><span data-k-lang="en">Manhattan digital test range with 1–6 UAVs, Three.js 3D world, sensor fusion, wind/GPS/link/propulsion degradation and explainable NOEMA events.</span><span data-k-lang="pl">Manhattan digital range: 1–6 UAV, Three.js, sensor fusion, degradacja GPS/link/napędu i wyjaśnialne zdarzenia NOEMA.</span></p><small>OPEN FLIGHT LAB ↗</small></a></div><div class="keryonSafety"><span data-k-lang="tr">GÜVENLİK KAPSAMI — Sentetik araştırma prototipidir; uçuş yönlendirmesi değildir. Silah kullanımı, hedefleme, strike planning veya saldırı mantığı modellenmez.</span><span data-k-lang="en">SAFETY SCOPE — Synthetic research prototype, not flight guidance. Weapon employment, targeting, strike planning and offensive mission logic are not modeled.</span><span data-k-lang="pl">ZAKRES BEZPIECZEŃSTWA — Syntetyczny prototyp badawczy, nie instrukcja lotnicza. System nie modeluje uzbrojenia, targetingu ani logiki ofensywnej.</span></div></div></section>
+          '''
+          if 'id="keryon" class="section shell"' not in s:
+              s = s.replace('<section id="systems"', section + '<section id="systems"', 1)
+
+          product = r'''{id:'TL-25',name:'KERYON Dynamics',domain:'autonomy',status:'research',summary:{tr:'Sivil UAV otonomisi, digital twin ve runtime assurance araştırma platformu.',en:'Civilian UAV autonomy, digital-twin and runtime-assurance research platform.',pl:'Platforma badawcza cywilnej autonomii UAV, digital twin i runtime assurance.'},desc:{tr:'KERYON Flight Lab; silahsız UAV simülasyonu, afet dayanıklılığı ve güvenilir otonomi araştırmalarını birleştirir. ORACLE v2 doğal dil görev niyetini kısıtlara çevirir, dört stratejiyi 4.096 sentetik plan-gelecek üzerinde değerlendirir, Shadow Twin ile reality divergence izler, assurance envelope ihlalinde otomatik replan yapar ve JSON Decision Proof üretir.',en:'KERYON Flight Lab combines non-weaponized UAV simulation, disaster resilience and trustworthy autonomy research. ORACLE v2 compiles mission intent into constraints, evaluates four strategies across 4,096 synthetic plan-futures, monitors reality divergence with a Shadow Twin, replans after assurance-envelope violations and generates a JSON Decision Proof.',pl:'KERYON Flight Lab łączy cywilną symulację UAV, odporność kryzysową i badania nad wiarygodną autonomią. ORACLE v2 analizuje 4 096 syntetycznych kombinacji, monitoruje Shadow Twin, replanuje po naruszeniu assurance envelope i generuje JSON Decision Proof.'},features:{tr:['ORACLE v2 runtime assurance','4.096 counterfactual plan-future / karar','Shadow Twin divergence monitoring','UAV/GNSS/Chaos fault injection','Otomatik replanning ve fleet-role reassignment','Machine-readable Decision Proof','Rescue Grid afet yanıt konsepti','Manhattan 3D Flight Lab'],en:['ORACLE v2 runtime assurance','4,096 counterfactual plan-futures per decision','Shadow Twin divergence monitoring','UAV/GNSS/Chaos fault injection','Automatic replanning and fleet-role reassignment','Machine-readable Decision Proof','Rescue Grid disaster-response concept','Manhattan 3D Flight Lab'],pl:['ORACLE v2 runtime assurance','4 096 counterfactual futures na decyzję','Monitoring Shadow Twin','Fault injection UAV/GNSS/Chaos','Automatyczny replanning','JSON Decision Proof','Rescue Grid','Manhattan 3D Flight Lab']},tech:['HTML','CSS','JavaScript','Three.js','Digital Twin','Monte Carlo / Counterfactual Simulation','Multi-agent autonomy','Public Manhattan GeoJSON'],next:{tr:'Gerçek zamanlı yetkili sensör/GIS verisiyle kontrollü validasyon, formal assurance benchmarkları ve daha güçlü digital-twin kalibrasyonu.',en:'Controlled validation with authorized real-time sensor/GIS data, formal assurance benchmarks and stronger digital-twin calibration.',pl:'Walidacja na autoryzowanych danych sensor/GIS, benchmarki assurance i lepsza kalibracja digital twin.'},repo:'https://github.com/tilkitaha/Keryon-flight-lab-prototype-',demo:'demos/keryon/oracle-v2.html'},'''
+          if "id:'TL-25',name:'KERYON Dynamics'" not in s:
+              s = s.replace('const P=[', 'const P=[' + product, 1)
+
+          path.write_text(s, encoding='utf-8')
+
+      - name: Commit synchronized site
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'TILKI LAB Site Bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add index.html demos/keryon
+          if git diff --cached --quiet; then
+            echo 'No changes to commit.'
+          else
+            git commit -m 'Add KERYON Dynamics and four interactive demos'
+            git push
+          fi
