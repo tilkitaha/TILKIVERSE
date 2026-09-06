@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#05070a" />
+<meta name="description" content="KERYON Flight Lab — Manhattan digital-twin UAV autonomy and resilience simulator." />
+<title>KERYON Flight Lab // Manhattan Digital Twin</title>
+<link rel="stylesheet" href="./styles.css" />
+<link rel="stylesheet" href="./disaster.css" />
+</head>
+<body>
+<main class="app">
+<header class="topbar">
+  <div class="brand"><div class="mark" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none"><path d="M8 28L48 38L38 48L16 44L8 28Z" fill="#cbd0d4"/><path d="M18 49L43 52L36 61L24 59L18 49Z" fill="#9fa6ac"/><path d="M33 78L57 28L68 37L53 58L69 74H54L46 66L40 78H33Z" fill="#d8dde0"/><path d="M62 31L92 50L62 69L70 54L84 50L70 46L62 31Z" fill="#d6a94a"/></svg></div><div><h1>KERYON DYNAMICS</h1><p>FLIGHT LAB // MANHATTAN DIGITAL TWIN // INTELLIGENCE IN MOTION</p></div></div>
+  <div class="statusline"><i class="dot"></i><span id="simState">DIGITAL TWIN SYNC</span><span>// PROTOTYPE 0.5</span></div>
+</header>
+
+<div class="layout">
+<section class="panel">
+  <div class="worldWrap">
+    <canvas id="world" class="world" aria-label="Three-dimensional Manhattan UAV autonomy simulation"></canvas>
+    <div class="scanlines"></div><div class="vignette"></div><div class="reticle"></div>
+    <div class="hudTop"><div class="hudBadge" id="leftHud">NYC // MANHATTAN DIGITAL TWIN</div><div class="hudBadge" id="rightHud">URBAN ENDURANCE // FLEET 3</div></div>
+    <div class="hudBottom"><span class="pill" id="dataHud">NYC OPEN DATA: LOADING</span><span class="pill" id="sensorHud">SENSOR FUSION: ON</span><span class="pill" id="aiHud">NOEMA AUTONOMY: ACTIVE</span></div>
+    <div class="fallback" id="fallback">3D engine could not load. Controls remain available, but this browser or network blocked the Three.js module.</div>
+  </div>
+  <div class="telemetry">
+    <div class="metric"><div class="k">Airspeed</div><div class="v"><span id="speed">0.0</span><span class="u">m/s</span></div></div>
+    <div class="metric"><div class="k">Altitude</div><div class="v"><span id="altitude">420</span><span class="u">m</span></div></div>
+    <div class="metric"><div class="k">Heading</div><div class="v"><span id="heading">018</span><span class="u">°</span></div></div>
+    <div class="metric"><div class="k">Energy</div><div class="v"><span id="energy">100.0</span><span class="u">%</span></div></div>
+    <div class="metric"><div class="k">Link</div><div class="v"><span id="linkMetric">99</span><span class="u">%</span></div></div>
+    <div class="metric"><div class="k">Fleet</div><div class="v"><span id="fleetMetric">3</span><span class="u">UAV</span></div></div>
+    <div class="metric"><div class="k">Sim time</div><div class="v"><span id="time">00:00</span></div></div>
+  </div>
+</section>
+
+<aside class="side">
+<section class="panel section">
+  <h2>NOEMA Mission Control</h2>
+  <label class="field"><span><b>Research mission</b></span><select id="scenario"><option value="urban">Urban endurance mapping</option><option value="hudson">Hudson environmental corridor</option><option value="central">Central Park canopy survey</option><option value="link">Urban data-link shadow</option><option value="gps">GNSS multipath degradation</option><option value="prop">Propulsion degradation test</option><option value="storm">Severe weather resilience</option></select></label>
+  <label class="field"><span><b>Aircraft class</b></span><select id="aircraft"><option value="male">MALE-R1 // medium-altitude research class</option><option value="heavy">HEAVY-R2 // heavy endurance research class</option><option value="vtol">VTOL-X // compact urban research class</option></select></label>
+  <label class="field"><span><b>Fleet size</b><output id="fleetOut">3 UAV</output></span><input id="fleet" type="range" min="1" max="6" value="3" /></label>
+  <label class="field"><span><b>Commanded altitude</b><output id="altOut">420 m</output></span><input id="altCmd" type="range" min="120" max="1200" step="20" value="420" /></label>
+  <label class="field"><span><b>Simulation speed</b><output id="speedOut">4×</output></span><input id="simSpeed" type="range" min="1" max="10" value="4" /></label>
+  <div class="btnrow"><button class="btn primary" id="start">START MISSION</button><button class="btn" id="pause">PAUSE</button><button class="btn" id="reset">RESET</button></div>
+</section>
+
+<section class="panel section">
+  <h2>Immersive Systems</h2>
+  <div class="toggles">
+    <label class="toggle"><input id="sensorFusion" type="checkbox" checked /> Sensor fusion overlay</label>
+    <label class="toggle"><input id="lidar" type="checkbox" checked /> LiDAR mapping cloud</label>
+    <label class="toggle"><input id="trails" type="checkbox" checked /> Fleet path trails</label>
+    <label class="toggle"><input id="coverage" type="checkbox" /> Coverage heat field</label>
+    <label class="toggle"><input id="director" type="checkbox" checked /> Cinematic director</label>
+    <label class="toggle"><input id="night" type="checkbox" /> Night operations</label>
+    <label class="toggle"><input id="weather" type="checkbox" /> Rain / atmosphere</label>
+    <label class="toggle"><input id="formation" type="checkbox" checked /> Cooperative formation</label>
+  </div>
+</section>
+
+<section class="panel section">
+  <h2>AI Copilot // Local command parser</h2>
+  <div class="command"><input id="command" placeholder="Try: night storm 5 drones lidar" aria-label="AI copilot command"/><button class="btn primary" id="commandGo">RUN</button></div>
+  <div class="chips"><button class="chip" data-cmd="night 4 drones lidar">Night fleet</button><button class="chip" data-cmd="storm 3 drones sensor fusion">Storm test</button><button class="chip" data-cmd="central park 2 vtol daytime">Park survey</button><button class="chip" data-cmd="hudson 5 drones cinematic">Hudson demo</button></div>
+</section>
+
+<section class="panel section">
+  <h2>Digital Twin Health</h2>
+  <div class="health">
+    <div class="healthCard"><div class="k">GNSS confidence</div><div class="v" id="gps">98%</div><div class="bar"><i id="gpsBar" style="width:98%"></i></div></div>
+    <div class="healthCard"><div class="k">Data link</div><div class="v" id="link">99%</div><div class="bar"><i id="linkBar" style="width:99%"></i></div></div>
+    <div class="healthCard"><div class="k">Propulsion</div><div class="v" id="prop">100%</div><div class="bar"><i id="propBar" style="width:100%"></i></div></div>
+    <div class="healthCard"><div class="k">Wind field</div><div class="v" id="wind">6.0 m/s</div><div class="bar"><i id="windBar" style="width:20%"></i></div></div>
+  </div>
+  <canvas class="spark" id="spark" width="600" height="80" aria-label="Live telemetry trend"></canvas>
+</section>
+
+<section class="panel section">
+  <h2>Explainable Autonomy</h2>
+  <div id="decisions"><div class="decision"><b>NOEMA</b><span>Awaiting mission start. Autonomy decisions will be explained here in real time.</span></div></div>
+  <h3 style="margin-top:12px">Event stream</h3><div class="log" id="log"><div>SYS // Manhattan digital twin booting</div><div>DATA // NYC building footprint sync requested</div></div>
+</section>
+</aside>
+</div>
+
+<div class="safety"><b>Research scope:</b> non-weaponized digital-twin prototype for flight dynamics, autonomy, mapping, navigation, reliability, environmental resilience and disaster response. Aircraft classes are generic public reference categories. The synthetic corridors shown are not real-world aviation guidance. Weapon employment, targeting, strike planning and offensive mission logic are not modeled.</div>
+<div class="footerbar"><span>KERYON FLIGHT LAB // MANHATTAN DIGITAL TWIN + RESILIENCE MODE</span><span>Official NYC building footprint data used when available // graceful procedural fallback</span></div>
+</main>
+<script type="module" src="./app.js"></script>
+<script type="module" src="./disaster.js"></script>
+</body>
+</html>
